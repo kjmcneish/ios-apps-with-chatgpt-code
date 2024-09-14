@@ -1,4 +1,3 @@
-# ios-apps-with-chatgpt-code
 # Coding iOS Apps with ChatGPT - Sample Code
 
 Welcome to the sample code repository for the book **"Coding iOS Apps with ChatGPT"**. This repository contains the code for the iOS Swift apps that are built progressively throughout the book. Each folder corresponds to the state of the project at the end of a chapter.
