@@ -21,16 +21,17 @@ Each folder contains the full code for that chapter's project. You can open each
    ```bash
    git clone https://github.com/yourusername/coding-ios-apps-with-chatgpt-sample.git
    cd coding-ios-apps-with-chatgpt-sample
+   ```
 
-##License
+## License
 
 This project is licensed under the Custom License. The sample code is for educational purposes only. You are free to modify and use the code for personal and educational projects. Commercial use, including publishing the app to the App Store, is prohibited.
 
-##Contributing
+## Contributing
 
 This repository is designed for the readers of the book. If you find any issues with the code or want to make improvements, feel free to open an issue or submit a pull request.
 
-##Support
+## Support
 
 If you encounter any issues or have questions about the code, feel free to open a GitHub issue or contact me directly.
 
