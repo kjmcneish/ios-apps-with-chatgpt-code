@@ -17,11 +17,15 @@ Each folder contains the full code for that chapter's project. You can open each
 
 ## How to Use This Repository
 
-1. **Clone the Repository**: First, clone the repository to your local machine.
-   ```bash
-   git clone https://github.com/yourusername/coding-ios-apps-with-chatgpt-sample.git
-   cd coding-ios-apps-with-chatgpt-sample
-   ```
+1. **Clone the Repository**: First, clone the repository to your local machine. To do this:
+   - Click the green **Code** button on this page
+   - In the dropdown menu, click "Open with GitHub Desktop"
+   - This opens GitHub Desktop, where you will be prompted to choose a location to clone the repository on your local machine
+   - After choosing the location, click "Clone".
+   - The repositiory will now be available in GitHub Desktop
+3. **Launch Finder**: Navigate to the desired Chapter folder
+4. **Copy the folder to another location** To preserve the original code, copy the TasteMap folder elsewhere on your computer, such as the Documents folder.
+5. **Open the Project in Xcode**: In Xcode's File menu, select *File > Open* and navigate to the folder where you have copied the code, and select the TasteMap.xcodeproj file.
 
 ## License
 
