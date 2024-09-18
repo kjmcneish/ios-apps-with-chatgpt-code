@@ -22,6 +22,7 @@
         <relationship name="restaurant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RestaurantEntity" inverseName="hours" inverseEntity="RestaurantEntity"/>
     </entity>
     <entity name="RestaurantEntity" representedClassName="RestaurantEntity" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="city" optional="YES" attributeType="String"/>
         <attribute name="country" optional="YES" attributeType="String"/>
         <attribute name="dateTimeCreated" attributeType="Date" usesScalarValueType="NO"/>
