@@ -25,6 +25,7 @@ class RestaurantCollectionViewController: UIViewController {
                 // Handle the case where city or country is nil
                 self.btnLocation.setTitle("Location not available", for: .normal)
             }
+            self.restaurantCollectionView.reloadData()
         }
     }
     
