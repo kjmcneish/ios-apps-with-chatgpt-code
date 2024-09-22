@@ -98,8 +98,8 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
             attributedString.addAttribute(.foregroundColor, value: statusColor, range: firstWordRange)
         }
         
-//        // Set the attributed string to the label
-//        cell.lblHours.attributedText = attributedString
+        // Set the attributed string to the label
+        cell.lblHours.attributedText = attributedString
 //        
 //        // Fetch the photos from the restaurant and its related meals
 //        var photos = [Data]()
