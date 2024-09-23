@@ -71,6 +71,7 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         else if segue.identifier == "EditRestaurantSegue", let editVC = segue.destination as? RestaurantEditTableViewController, let selectedRestaurant = sender as? RestaurantEntity {
             // Pass the selected RestaurantEntity to the edit view controller
             editVC.restaurantEntity = selectedRestaurant
+            editVC.delegate = self
             editVC.isNewRestaurant = false
         }
     }
