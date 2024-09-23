@@ -298,6 +298,11 @@ class RestaurantEditTableViewController: UITableViewController, UIImagePickerCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             imgRestaurant.image = selectedImage
+            
+            // Save the image as Data and store it in the restaurantEntity.photo property
+            if let imageData = selectedImage.jpegData(compressionQuality: 0.8) {
+                restaurantEntity.photo = imageData
+            }
         }
         picker.dismiss(animated: true, completion: nil)
     }
