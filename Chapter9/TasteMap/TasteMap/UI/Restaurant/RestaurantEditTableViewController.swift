@@ -73,11 +73,6 @@ class RestaurantEditTableViewController: UITableViewController, UIImagePickerCon
         
         if let imageData = restaurantEntity.photo {
             imgRestaurant.image = UIImage(data: imageData)
-            
-            // Save the image as Data and store it in the restaurantEntity.photo property
-            if let imageData = selectedImage.jpegData(compressionQuality: 0.8) {
-                restaurantEntity.photo = imageData
-            }
         }
         btnDone.isEnabled = true
         txtName.text = restaurantEntity.name
@@ -241,37 +236,48 @@ class RestaurantEditTableViewController: UITableViewController, UIImagePickerCon
             // Deselect the row with animation after a slight delay
             tableView.deselectRow(at: indexPath, animated: true)
         }
-//        else if indexPath.section == 0 && indexPath.row == 7 {
-//            // Find the current selected country based on the stored country name or fallback to the first country
-//            let currentCountry: Locale.Region?
-//
-//            if let countryName = restaurantEntity.country, !countryName.isEmpty {
-//                // If restaurantEntity.country is set, find the matching Locale.Region
-//                currentCountry = Locale.Region.isoRegions.first {
-//                    let localizedCountryName = Locale.current.localizedString(forRegionCode: $0.identifier)
-//                    return localizedCountryName == countryName
-//                }
-//            } else {
-//                // If restaurantEntity.country is not set, fallback to the first region
-//                currentCountry = Locale.Region.isoRegions.first
-//            }
-//
-//            let countrySelectionView = CountrySelectionView(
-//                currentCountry: currentCountry, // Pass the Locale.Region of the current country
-//                onCountrySelected: { selectedCountryName in
-//                    // Update the label and entity with the selected country's name
-//                    self.lblCountry.text = selectedCountryName
-//                    self.restaurantEntity.country = selectedCountryName
-//                }
-//            )
-//
-//            let hostingController = UIHostingController(rootView: countrySelectionView)
-//            present(hostingController, animated: true, completion: nil)
-//
-//            // Deselect the row with animation after a slight delay
-//            tableView.deselectRow(at: indexPath, animated: true)
-//        }
+        else if indexPath.section == 0 && indexPath.row == 7 {
+            // Find the current selected country based on the stored country name or fallback to the first country
+            let currentCountry: Locale.Region?
+
+            if let countryName = restaurantEntity.country, !countryName.isEmpty {
+                // If restaurantEntity.country is set, find the matching Locale.Region
+                currentCountry = Locale.Region.isoRegions.first {
+                    let localizedCountryName = Locale.current.localizedString(forRegionCode: $0.identifier)
+                    return localizedCountryName == countryName
+                }
+            } else {
+                // If restaurantEntity.country is not set, fallback to the first region
+                currentCountry = Locale.Region.isoRegions.first
+            }
+
+            let countrySelectionView = CountrySelectionView(
+                currentCountry: currentCountry, // Pass the Locale.Region of the current country
+                onCountrySelected: { selectedCountryName in
+                    // Update the label and entity with the selected country's name
+                    self.lblCountry.text = selectedCountryName
+                    self.restaurantEntity.country = selectedCountryName
+                }
+            )
+
+            let hostingController = UIHostingController(rootView: countrySelectionView)
+            present(hostingController, animated: true, completion: nil)
+
+            // Deselect the row with animation after a slight delay
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Check if the segue is the MealsSegue
+//        if segue.identifier == "MealsSegue" {
+//            // Ensure the destination is the correct view controller
+//            if let mealsCollectionViewController = segue.destination as? MealCollectionViewController {
+//                // Pass the restaurant entity to the MealsViewController
+//                mealsCollectionViewController.restaurantEntity = self.restaurantEntity
+//            }
+//        }
+//    }
 
     // MARK: - Button Action Handling
     @IBAction func cancelTapped(_ sender: Any) {
