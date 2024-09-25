@@ -10,7 +10,7 @@ import UIKit
 class RestaurantCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var restaurants = [RestaurantEntity]()
-    
+    var isEditingMode = false
     var traitChangesObserver: NSObjectProtocol?
     
     @IBOutlet weak var btnLocation: UIButton!
@@ -57,6 +57,36 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         Location.shared.stopUpdatingLocation() // Stop updates when the view disappears
     }
     
+    @IBAction func editButtonTapped(_ sender: Any) {
+        // Toggle edit mode
+        self.isEditingMode.toggle()
+
+        // Reload collection to show/hide delete buttons
+        self.restaurantCollectionView.reloadData()
+    }
+    
+    @objc func deleteButtonTapped(_ sender: UIButton) {
+        let index = sender.tag
+        let restaurantToDelete = restaurants[index]
+        
+        // Remove the restaurant entity from the list
+        restaurants.remove(at: index)
+        
+        // Delete the entity from the data source
+        let result = Restaurant.shared.deleteEntityAndSave(restaurantToDelete)
+        
+        if result.state == .saveComplete {
+            restaurantCollectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+        }
+        else
+        {
+            // Handle save errors 
+            let alert = UIAlertController(title: "Delete Error", message: "Failed to delete the restaurant. Please try again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.restaurants.count
     }
@@ -100,6 +130,23 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         
         // Set the attributed string to the label
         cell.lblHours.attributedText = attributedString
+        
+        // Add delete button only if in editing mode
+        if isEditingMode {
+            let deleteButton = UIButton(type: .system)
+            deleteButton.setTitle("Delete", for: .normal)
+            deleteButton.setTitleColor(.red, for: .normal)
+            deleteButton.frame = CGRect(x: cell.bounds.width - 80, y: cell.bounds.height - 40, width: 70, height: 30)
+            deleteButton.tag = indexPath.row
+            deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+            cell.addSubview(deleteButton)
+        }
+        else {
+            // Remove existing delete buttons
+            for subview in cell.subviews where subview is UIButton {
+                subview.removeFromSuperview()
+            }
+        }
         
         // Fetch the photos from the restaurant and its related meals
         var photos = [Data]()

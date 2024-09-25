@@ -172,7 +172,14 @@
                             <constraint firstItem="3Ma-13-GSZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="tHJ-U9-gOP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="TasteMap" id="MZL-NP-oHo"/>
+                    <navigationItem key="navigationItem" title="TasteMap" id="MZL-NP-oHo">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="pencil" catalog="system" id="qIM-XY-m4b">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="editButtonTapped:" destination="BYZ-38-t0r" id="syK-YW-aoS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="btnLocation" destination="tgi-U9-4jV" id="m2r-kk-YeF"/>
                         <outlet property="restaurantCollectionView" destination="1qj-t1-24X" id="NgC-fp-2a0"/>
@@ -211,6 +218,7 @@
     </scenes>
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="pencil" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.25490196078431371" green="0.56862745098039214" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
