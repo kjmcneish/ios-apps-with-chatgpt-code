@@ -13,6 +13,7 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
     
     var restaurantEntity: RestaurantEntity?
     var meals = [MealEntity]()
+    var isEditingMode = false
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -35,24 +36,8 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         // Do any additional setup after loading the view.
         self.title = restaurantEntity?.name
-        
-//        // TEMP: Create a test meal entity
-//        let testMeal = MealEntity(
-//            dateTime: Date(),
-//            id: UUID(),
-//            name: "Turkey club",
-//            photo: UIImage(named: "TurkeyClub")?.jpegData(compressionQuality: 1.0),
-//            comment: "Delicious ingredients, real turkey and crispy bread!",
-//            restaurant: restaurantEntity!
-//        )
-//        
-//        // Add the test meal to the meals array
-//        meals.append(testMeal)
         
         // Setup the placeholder label
         self.view.addSubview(noMealsLabel)
@@ -62,6 +47,38 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
         ])
         
         self.loadMealsForRestaurant()
+    }
+    
+    @IBAction func editButtonTapped(_ sender: Any) {
+       // Toggle edit mode
+       self.isEditingMode.toggle()
+
+       // Reload collection to show/hide delete buttons
+        self.collectionView.reloadData()
+    }
+    
+    @objc func deleteButtonTapped(_ sender: UIButton) {
+        let index = sender.tag
+        let mealToDelete = meals[index]
+        
+        // Remove the restaurant entity from the list
+        meals.remove(at: index)
+        
+        // Delete the entity from the data source
+        let result = Meal.shared.deleteEntityAndSave(mealToDelete)
+        
+        if result.state == .saveComplete {
+            collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+            // Show/hide the placeholder view
+            noMealsLabel.isHidden = !meals.isEmpty
+        }
+        else
+        {
+            // Handle save errors
+            let alert = UIAlertController(title: "Delete Error", message: "Failed to delete the meal. Please try again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     func loadMealsForRestaurant() {
@@ -79,16 +96,6 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
         // Show/hide the placeholder view
         noMealsLabel.isHidden = !meals.isEmpty
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Navigation
 
@@ -102,9 +109,23 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
                 mealEditVC.delegate = self
             }
         }
+        else if segue.identifier == "EditMealSegue", let editVC = segue.destination as? MealEditTableViewController, let selectedMeal = sender as? MealEntity {
+            // Pass the selected MealEntity to the edit view controller
+            editVC.mealEntity = selectedMeal
+            editVC.delegate = self
+            editVC.isNewMeal = false
+        }
     }
 
     // MARK: UICollectionViewDataSource
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // Get the selected restaurant entity
+        let selectedMeal = meals[indexPath.row]
+        
+        // Trigger the segue and pass the selected restaurant entity
+        performSegue(withIdentifier: "EditMealSegue", sender: selectedMeal)
+    }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -140,6 +161,23 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
         // Set the description or comments
         cell.lblComments.text = meal.comment ?? "No description available"
         
+        // Add delete button only if in editing mode
+        if isEditingMode {
+            let deleteButton = UIButton(type: .system)
+            deleteButton.setTitle("Delete", for: .normal)
+            deleteButton.setTitleColor(.red, for: .normal)
+            deleteButton.frame = CGRect(x: cell.bounds.width - 80, y: cell.bounds.height - 40, width: 70, height: 30)
+            deleteButton.tag = indexPath.row
+            deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+            cell.addSubview(deleteButton)
+        }
+        else {
+            // Remove existing delete buttons
+            for subview in cell.subviews where subview is UIButton {
+                subview.removeFromSuperview()
+            }
+        }
+        
         return cell
     }
 
@@ -152,46 +190,19 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
         return CGSize(width: width, height: height)
     }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
 
 extension MealCollectionViewController: MealEditDelegate {
     func didAddNewMeal(_ meal: MealEntity) {
-        // Add the new meal to the data source
-        self.meals.append(meal)
-        // Reload the collection view to display the new restaurant
+        if let index = self.meals.firstIndex(where: { $0.id == meal.id }) {
+            // Update the existing meal
+            self.meals[index] = meal
+        }
+        else {
+            // Add new meal
+            self.meals.append(meal)
+        }
         self.collectionView.reloadData()
-        // Hide the placeholder view
         noMealsLabel.isHidden = !meals.isEmpty
     }
 }

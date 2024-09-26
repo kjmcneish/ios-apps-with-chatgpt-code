@@ -175,13 +175,11 @@
                     <navigationItem key="navigationItem" title="TasteMap" id="MZL-NP-oHo">
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="BiK-cO-bDn">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="laz-ir-xxG" kind="presentation" identifier="AddRestaurantSegue" id="oBo-0l-kS7"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Item" image="pencil" catalog="system" id="dFo-Nz-jd6">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="editButtonTapped:" destination="BYZ-38-t0r" id="WKm-B5-nnU"/>
                                 </connections>
@@ -1043,7 +1041,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultMeal" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Ss-5Oz">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultMeal" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Ss-5Oz">
                                             <rect key="frame" x="8" y="66" width="106" height="106"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="106" id="gap-cT-M95"/>
@@ -1089,12 +1087,22 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" style="editor" id="j8o-Kt-dpH">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="JAi-Pr-JYS">
-                            <connections>
-                                <segue destination="Ekb-Cy-vP3" kind="presentation" identifier="AddMealSegue" id="X9Q-xW-RQ6"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="JAi-Pr-JYS">
+                                <connections>
+                                    <segue destination="Ekb-Cy-vP3" kind="presentation" identifier="AddMealSegue" id="X9Q-xW-RQ6"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="pencil" catalog="system" id="8Iy-PX-Bdy">
+                                <connections>
+                                    <action selector="editButtonTapped:" destination="0ui-ks-V4a" id="nHx-Lg-NxH"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Ekb-Cy-vP3" kind="show" identifier="EditMealSegue" id="NzH-qe-VUh"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yP9-bp-luc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1105,7 +1113,7 @@
             <objects>
                 <tableViewController id="Ekb-Cy-vP3" customClass="MealEditTableViewController" customModule="TasteMap" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="C1E-oN-Vqn">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Hf3-vp-zw7">
@@ -1130,7 +1138,7 @@
                                         <action selector="doneTapped:" destination="Ekb-Cy-vP3" eventType="touchUpInside" id="4ju-Pb-EPs"/>
                                     </connections>
                                 </button>
-                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultMeal" translatesAutoresizingMaskIntoConstraints="NO" id="mTv-HF-Z41">
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultMeal" translatesAutoresizingMaskIntoConstraints="NO" id="mTv-HF-Z41">
                                     <rect key="frame" x="121.66666666666669" y="40" width="150" height="150"/>
                                     <gestureRecognizers/>
                                     <constraints>
@@ -1209,23 +1217,23 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="aMQ-04-Ztk">
-                                        <rect key="frame" x="0.0" y="465.33333587646484" width="393" height="70"/>
+                                        <rect key="frame" x="0.0" y="465.33333587646484" width="393" height="71.666664123535156"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aMQ-04-Ztk" id="nA4-hq-AZ6">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="71.666664123535156"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVQ-ZP-NWi">
-                                                    <rect key="frame" x="8" y="0.0" width="377" height="70"/>
+                                                    <rect key="frame" x="8" y="0.0" width="377" height="71.666666666666671"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MA-gh-jTX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75.333333333333329" height="70"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="75.333333333333329" height="71.666666666666671"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="9iw-ap-KVT">
-                                                            <rect key="frame" x="75.333333333333343" y="0.0" width="301.66666666666663" height="70"/>
+                                                            <rect key="frame" x="75.333333333333343" y="0.0" width="301.66666666666663" height="71.666666666666671"/>
                                                         </datePicker>
                                                     </subviews>
                                                     <constraints>
@@ -1271,6 +1279,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="NzH-qe-VUh"/>
         <segue reference="0tw-fh-pkb"/>
     </inferredMetricsTieBreakers>
     <resources>
