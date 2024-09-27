@@ -213,7 +213,14 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
     }
     
     func didAddNewRestaurant(_ restaurant: RestaurantEntity) {
-        self.restaurants.append(restaurant)
+        if let index = self.restaurants.firstIndex(where: { $0.id == restaurant.id }) {
+            // Update the existing restaurant
+            self.restaurants[index] = restaurant
+        }
+        else {
+            // Add new meal
+            self.restaurants.append(restaurant)
+        }
         self.restaurantCollectionView.reloadData()
     }
 

@@ -9,11 +9,6 @@ import UIKit
 
 class RestaurantCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RestaurantEditDelegate {
     
-    func didAddNewRestaurant(_ restaurant: RestaurantEntity) {
-        self.restaurants.append(restaurant)
-        self.restaurantCollectionView.reloadData()
-    }
-    
     var restaurants = [RestaurantEntity]()
     var isEditingMode = false
     var traitChangesObserver: NSObjectProtocol?
@@ -217,5 +212,16 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         }, completion: nil)
     }
 
+    func didAddNewRestaurant(_ restaurant: RestaurantEntity) {
+        if let index = self.restaurants.firstIndex(where: { $0.id == restaurant.id }) {
+            // Update the existing restaurant
+            self.restaurants[index] = restaurant
+        }
+        else {
+            // Add new meal
+            self.restaurants.append(restaurant)
+        }
+        self.restaurantCollectionView.reloadData()
+    }
 }
 
