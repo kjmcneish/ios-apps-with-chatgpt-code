@@ -9,7 +9,7 @@ import UIKit
 
 private let reuseIdentifier = "MealCell"
 
-class MealCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class MealCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MealEditDelegate {
     
     var restaurantEntity: RestaurantEntity?
     var meals = [MealEntity]()
@@ -190,9 +190,6 @@ class MealCollectionViewController: UICollectionViewController, UICollectionView
         return CGSize(width: width, height: height)
     }
 
-}
-
-extension MealCollectionViewController: MealEditDelegate {
     func didAddNewMeal(_ meal: MealEntity) {
         if let index = self.meals.firstIndex(where: { $0.id == meal.id }) {
             // Update the existing meal
