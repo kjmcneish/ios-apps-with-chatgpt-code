@@ -31,9 +31,6 @@ class MealEditTableViewController: UITableViewController, UIImagePickerControlle
         // Disable the Done button initially
         self.btnDone.isEnabled = false
         
-        // Add a target action to monitor text changes
-        txtMealName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
         if self.isNewMeal {
             self.mealEntity = MealEntity(restaurant: restaurantEntity)
         }
@@ -58,7 +55,7 @@ class MealEditTableViewController: UITableViewController, UIImagePickerControlle
         datePicker.date = mealEntity.dateTime
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
+    @IBAction func textFieldDidChange(_ textField: UITextField) {
         // Enable Done button if name isn’t empty
         if let name = textField.text, !name.isEmpty {
             btnDone.isEnabled = true
@@ -81,27 +78,15 @@ class MealEditTableViewController: UITableViewController, UIImagePickerControlle
 
         let result = Meal.shared.insertEntity(self.mealEntity)
         
-        // Handle the result
-        switch result.state {
-        case .saveComplete:
-            // Notify the delegate about the new meal
-            delegate?.didAddNewMeal(self.mealEntity)
-            if let navigationController = self.navigationController {
-                navigationController.popViewController(animated: true)
-            }
-            else {
-                dismiss(animated: true, completion: nil)
-            }
-        case .rulesBroken:
-            // Show an alert with the validation message
-            let alert = UIAlertController(title: "Validation Error", message: result.message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-        case .error:
-            // Show an alert with the error message
-            let alert = UIAlertController(title: "Save Error", message: result.message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+        if result.state == .saveComplete {
+            self.delegate?.didAddNewMeal(mealEntity)
+        }
+
+        if let navigationController = self.navigationController {
+            navigationController.popViewController(animated: true)
+        }
+        else {
+            dismiss(animated: true, completion: nil)
         }
     }
 
