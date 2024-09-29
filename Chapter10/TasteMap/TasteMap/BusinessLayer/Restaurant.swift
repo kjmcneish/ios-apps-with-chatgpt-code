@@ -11,15 +11,33 @@ import UIKit
 private let rb = Restaurant<RestaurantEntity>()
 
 enum RestaurantStatusColor {
-	case open
-	case closed
-	case unknown
+    case open
+    case closed
+    case unknown
 }
 
 public class Restaurant<T: RestaurantEntity> : BusinessObject<T> {
-		
-	static var shared : Restaurant<RestaurantEntity> { return rb }
-	
+        
+    static var shared : Restaurant<RestaurantEntity> { return rb }
+    
+    // Override insertEntity to exclude invalid hours before inserting the entity
+    override func insertEntity(_ entity: T) -> (state: SaveResult, message: String?) {
+        
+        // Filter out invalid operating hours (e.g., no open or closing time)
+        let validHours = entity.hours?.filter { hours in
+            guard let _ = hours.openTime, let _ = hours.closingTime else {
+                return false // Exclude hours with missing open or close times
+            }
+            return true
+        }
+        
+        // Set the filtered hours back to the restaurant entity
+        entity.hours = validHours
+        
+        // Call the original insertEntity method to insert the entity
+        return super.insertEntity(entity)
+    }
+    
     public func getOperatingHoursText(hours: [OperatingHoursEntity]?) -> (statusText: String, isOpen: Bool?) {
         guard let hours = hours else {
             return ("No operating hours available", nil)
@@ -58,9 +76,6 @@ public class Restaurant<T: RestaurantEntity> : BusinessObject<T> {
                         nextOpeningTime = normalizedOpenTime
                         break
                     }
-                }
-                else {
-                    print("no opening/closing time")
                 }
             }
         }
@@ -103,27 +118,27 @@ public class Restaurant<T: RestaurantEntity> : BusinessObject<T> {
         }
     }
 
-	private func normalizeTime(date: Date, withNextDay: Bool = false) -> Date {
-		let calendar = Calendar.current
-		let normalizedDate = calendar.date(bySettingHour: calendar.component(.hour, from: date),
-										   minute: calendar.component(.minute, from: date),
-										   second: 0, of: Date()) ?? date
-		if withNextDay {
-			return calendar.date(byAdding: .day, value: 1, to: normalizedDate) ?? normalizedDate
-		}
-		return normalizedDate
-	}
+    private func normalizeTime(date: Date, withNextDay: Bool = false) -> Date {
+        let calendar = Calendar.current
+        let normalizedDate = calendar.date(bySettingHour: calendar.component(.hour, from: date),
+                                           minute: calendar.component(.minute, from: date),
+                                           second: 0, of: Date()) ?? date
+        if withNextDay {
+            return calendar.date(byAdding: .day, value: 1, to: normalizedDate) ?? normalizedDate
+        }
+        return normalizedDate
+    }
 
-	private func closeTimeIsMidnight(_ date: Date) -> Bool {
-		let calendar = Calendar.current
-		let components = calendar.dateComponents([.hour, .minute], from: date)
-		return components.hour == 0 && components.minute == 0
-	}
+    private func closeTimeIsMidnight(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: date)
+        return components.hour == 0 && components.minute == 0
+    }
 
-	private func timeString(from date: Date) -> String {
-		let formatter = DateFormatter()
-		formatter.timeStyle = .short
-		return formatter.string(from: date)
-	}
+    private func timeString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
 }
 

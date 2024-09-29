@@ -91,7 +91,13 @@ class RestaurantEditTableViewController: UITableViewController, UIImagePickerCon
         txtLatitude.text = "\(restaurantEntity.latitude ?? 0)"
         txtLongitude.text = "\(restaurantEntity.longitude ?? 0)"
         
-        populateOperatingHours()
+        if restaurantEntity.hours == nil || restaurantEntity.hours?.count == 0 {
+            // Hours haven't been specified for the restaurant yet
+            self.ensureHoursArrayIsComplete()
+        }
+        else {
+            populateOperatingHours()
+        }
     }
 
     // MARK: - Operating Hours Population
