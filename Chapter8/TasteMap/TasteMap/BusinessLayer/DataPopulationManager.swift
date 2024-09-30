@@ -53,7 +53,7 @@ class DataPopulationManager {
             "Chilean", "Chinese", "Colombian", "Coffee", "Cuban", "Cypriot", "Czech", "Danish", "Dominican", "Dutch",
             "Ecuadorian", "Egyptian", "Ethiopian", "Filipino", "Finnish", "French", "Georgian", "German", "Ghanaian",
             "Greek", "Guatemalan", "Haitian", "Hawaiian", "Honduran", "Hungarian", "Indian", "Indonesian", "International",
-            "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian",
+            "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jewish", "Jordanian",
             "Kenyan", "Korean", "Kosovar", "Kurdish", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan",
             "Lithuanian", "Malaysian", "Maldivian", "Malian", "Maltese", "Mauritian", "Mediterranean", "Mexican",
             "Middle Eastern", "Mongolian", "Moroccan", "Nepalese", "New Zealand", "Nigerian", "Norwegian", "Pakistani",
