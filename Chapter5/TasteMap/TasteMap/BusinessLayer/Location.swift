@@ -43,7 +43,7 @@ public class Location: NSObject, CLLocationManagerDelegate {
     public private(set) var locationEntity: LocationEntity?
     
     private var locationUpdateHandler: ((LocationEntity?, Error?) -> Void)?
-    private var isUpdatingLocation = false
+    public var isUpdatingLocation = false
 	
     var currentLocation: CLLocation? // Store the current location
 	weak var delegate: LocationDelegate?
