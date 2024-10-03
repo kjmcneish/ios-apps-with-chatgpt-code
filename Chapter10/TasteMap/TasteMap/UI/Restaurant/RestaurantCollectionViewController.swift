@@ -48,7 +48,6 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.startUpdatingLocation()
-        self.restaurants = Restaurant.shared.getAllEntities()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
