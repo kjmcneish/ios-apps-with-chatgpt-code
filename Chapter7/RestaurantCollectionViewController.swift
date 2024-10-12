@@ -72,6 +72,7 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
                 // Handle the case where city or country is not available
                 self.btnLocation.setTitle("Location not available", for: .normal)
             }
+            self.restaurantCollectionView.reloadData()
         }
     }
     
@@ -80,6 +81,14 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         guard Location.shared.isUpdatingLocation else { return }  // Check the Location object's isUpdatingLocation flag
         
         Location.shared.stopUpdatingLocation()
+    }
+    
+    @IBAction func editButtonTapped(_ sender: Any) {
+        // Toggle edit mode
+        self.isEditingMode.toggle()
+
+        // Reload collection to show/hide delete buttons
+        self.restaurantCollectionView.reloadData()
     }
     
     @objc func deleteButtonTapped(_ sender: UIButton) {
