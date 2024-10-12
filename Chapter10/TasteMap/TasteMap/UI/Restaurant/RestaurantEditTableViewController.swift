@@ -515,4 +515,11 @@ class RestaurantEditTableViewController: UITableViewController, UIImagePickerCon
         }
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Assuming the DatePicker is in row 7 (after the Saturday row) in section 1
+        if indexPath.section == 1 && indexPath.row == 7 {
+            return pickerIsVisible ? 216 : 0  // Toggle between showing and hiding the picker
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
 }
