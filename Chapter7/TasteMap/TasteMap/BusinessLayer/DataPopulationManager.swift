@@ -61,7 +61,7 @@ class DataPopulationManager {
             "Russian", "Salvadoran", "Saudi Arabian", "Scottish", "Senegalese", "Serbian", "Singaporean", "Slovak",
             "Somali", "South African", "Spanish", "Sri Lankan", "Sudanese", "Swedish", "Swiss", "Syrian", "Taiwanese",
             "Tajik", "Tanzanian", "Thai", "Tibetan", "Togolese", "Tunisian", "Turkish", "Ukrainian", "Uruguayan",
-            "Uzbek", "Venezuelan", "Vietnamese", "Welsh", "Yemeni", "Zambian", "Zimbabwean"
+            "Uzbek", "Vegan", "Vegetarian", "Venezuelan", "Vietnamese", "Welsh", "Yemeni", "Zambian", "Zimbabwean"
         ]
         
         for cuisineName in cuisineList {
