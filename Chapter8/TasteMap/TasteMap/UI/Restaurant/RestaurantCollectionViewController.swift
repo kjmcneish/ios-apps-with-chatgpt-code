@@ -126,6 +126,20 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         }
     }
     
+    @objc func cellTapped(_ sender: UITapGestureRecognizer) {
+        
+        if self.isEditingMode {
+            return // Prevent navigation when in edit mode
+        }
+        
+        if let tappedCell = sender.view as? UICollectionViewCell,
+           let indexPath = restaurantCollectionView.indexPath(for: tappedCell) {
+            let selectedRestaurant = restaurants[indexPath.row]
+            // Perform the segue to RestaurantEditTableViewController
+            performSegue(withIdentifier: "EditRestaurantSegue", sender: selectedRestaurant)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // Get the selected restaurant entity
@@ -146,6 +160,10 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
                     
         // Configure the cell
         let restaurantEntity = restaurants[indexPath.row]
+        
+        // Add a tap gesture recognizer to the cell
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped(_:)))
+        cell.addGestureRecognizer(tapGesture)
         
         // Get the distance from the current location
         var distanceText: String? = nil
