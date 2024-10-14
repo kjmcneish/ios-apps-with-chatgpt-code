@@ -49,7 +49,7 @@ class DataPopulationManager {
     public func populateCuisines() -> (state: SaveResult, message: String?) {
         let cuisineList = [
             "Afghan", "Albanian", "Algerian", "American", "Argentinian", "Armenian", "Asian", "Australian", "Austrian", "Bangladeshi", "Bakery",
-            "Belgian", "Bolivian", "Brazilian", "British", "Bulgarian", "Burmese", "Cajun", "Cambodian", "Caribbean",
+            "Belgian", "Bolivian", "Brazilian", "British", "Brunch",  "Bulgarian", "Burmese", "Cajun", "Cambodian", "Caribbean",
             "Chilean", "Chinese", "Colombian", "Coffee", "Cuban", "Cypriot", "Czech", "Danish", "Dominican", "Dutch",
             "Ecuadorian", "Egyptian", "Ethiopian", "Filipino", "Finnish", "French", "Georgian", "German", "Ghanaian",
             "Greek", "Guatemalan", "Haitian", "Hawaiian", "Honduran", "Hungarian", "Indian", "Indonesian", "International",
