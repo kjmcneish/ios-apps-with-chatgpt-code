@@ -73,11 +73,6 @@ class RestaurantEditTableViewController: UITableViewController, UIImagePickerCon
         
         if let imageData = restaurantEntity.photo {
             imgRestaurant.image = UIImage(data: imageData)
-            
-            // Save the image as Data and store it in the restaurantEntity.photo property
-            if let imageData = selectedImage.jpegData(compressionQuality: 0.8) {
-                restaurantEntity.photo = imageData
-            }
         }
         btnDone.isEnabled = true
         txtName.text = restaurantEntity.name
