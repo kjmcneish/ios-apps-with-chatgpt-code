@@ -298,6 +298,15 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
                 }
             }
         }
+        else {
+            let alert = UIAlertController(title: "No Address Available",
+               message: "There is no address specified for this location.",
+               preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func openAppleMaps(restaurantName: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -440,10 +449,6 @@ class RestaurantCollectionViewController: UIViewController, UICollectionViewData
         // Set RestaurantDirectionsDelegate
         cell.delegate = self
         cell.restaurant = restaurantEntity
-        
-        // Enable btnDirections if either coordinates or address
-        // are available AND the view is not in editing mode
-        cell.btnDirections.isEnabled = !restaurantEntity.isLocationAndAddressMissing && !self.isEditingMode
                     
         return cell
     }
